@@ -1,15 +1,11 @@
-import 'dart:io';
-
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-
 import 'package:ptint/1/mmm1.dart';
 import 'package:ptint/1/nmm.dart';
-
+import 'package:ptint/task/task.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
-
 import 'UploadFile.dart';
 
 class ViewPagePrint extends StatefulWidget {
@@ -21,34 +17,30 @@ class _ViewPagePrintState extends State<ViewPagePrint> {
   int _currentStep = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
-
-  /*  void _showSnackBarMsg(String msg) {
-    _scaffoldstate.currentState.showSnackBar(new SnackBar(
-      content: new Text(msg),
-    ));
-  } */
-
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 1.7,
       child: Scaffold(
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.grey),
-            backgroundColor: Colors.white,
-            elevation: 2,
-            title: Text("الطباعة".toUpperCase(),
-                style: TextStyle(
-                  color: Colors.grey[700],
-                  fontSize: 17,
-                )),
-            leading: IconButton(
-                icon: Icon(Icons.close, size: 28),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-          ),
+          appBar: AppBar(actions: [
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                    child: Badge(
+                        badgeColor: LightColor.iconColor,
+                        badgeContent: Text(
+                          '0',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.shopping_cart_outlined),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      HomeItem()));
+                            }))))
+          ]),
           body: Form(
               key: _scaffoldstate,
               child: Column(children: [

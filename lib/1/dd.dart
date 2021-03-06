@@ -17,7 +17,6 @@ import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 class ResumeModel {
   final String name;
@@ -478,64 +477,25 @@ class _UploadFile112State extends State<UploadFile112> {
         padding: const EdgeInsets.all(24),
         child: SingleChildScrollView(
             child: Form(
-                autovalidate: _autovalidate,
+                // autovalidate: _autovalidate,
                 // key: _key,
                 child: Column(children: <Widget>[
-                  ListTile(
-                    title: Text(
-                      'تحديد متصل',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                  _radioValue == 0
-                      ? Row(children: [
-                          Expanded(
-                              child: Card(
-                                  child: TextFormField(
-                                      //  controller: _txtTitle,
-                                      maxLength: 4,
-                                      cursorColor: Colors.black54,
-                                      style: TextStyle(color: Colors.black54),
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                        labelStyle:
-                                            TextStyle(color: Colors.black54),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black54)),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0)),
-                                        hintText: ' من صفحة',
-                                      )))),
-                          Expanded(
-                              child: Card(
-                                  child: TextFormField(
-                                      //  controller: _txtTitle,
-                                      maxLength: 4,
-                                      cursorColor: Colors.black54,
-                                      style: TextStyle(color: Colors.black54),
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                        labelStyle:
-                                            TextStyle(color: Colors.black54),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black54)),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0)),
-                                        hintText: 'الى صفحة',
-                                      ))))
-                        ])
-                      : Text(""),
-                  _radioValue == 1
-                      ? Card(
+          ListTile(
+            title: Text(
+              'تحديد متصل',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+          _radioValue == 0
+              ? Row(children: [
+                  Expanded(
+                      child: Card(
                           child: TextFormField(
-                              // controller:
+                              //  controller: _txtTitle,
+                              maxLength: 4,
                               cursorColor: Colors.black54,
                               style: TextStyle(color: Colors.black54),
                               keyboardType: TextInputType.emailAddress,
@@ -546,16 +506,50 @@ class _UploadFile112State extends State<UploadFile112> {
                                         BorderSide(color: Colors.black54)),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0)),
-                                labelText: "مثال 1.2.3.9.100",
-                              ),
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return "الرجاء تعبية البيانات";
-                                }
-                                return null;
-                              }))
-                      : Text(""),
-                ]))));
+                                hintText: ' من صفحة',
+                              )))),
+                  Expanded(
+                      child: Card(
+                          child: TextFormField(
+                              //  controller: _txtTitle,
+                              maxLength: 4,
+                              cursorColor: Colors.black54,
+                              style: TextStyle(color: Colors.black54),
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(color: Colors.black54),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.black54)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                hintText: 'الى صفحة',
+                              ))))
+                ])
+              : Text(""),
+          _radioValue == 1
+              ? Card(
+                  child: TextFormField(
+                      // controller:
+                      cursorColor: Colors.black54,
+                      style: TextStyle(color: Colors.black54),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.black54),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black54)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        labelText: "مثال 1.2.3.9.100",
+                      ),
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "الرجاء تعبية البيانات";
+                        }
+                        return null;
+                      }))
+              : Text(""),
+        ]))));
   }
 
 /*   void _selectImage(Future<File> pickImage) async {

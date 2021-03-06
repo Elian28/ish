@@ -2,6 +2,7 @@ class city {
   int id;
   String name;
   List<Neighborhood> Nbrhood;
+
   city({this.id, this.name, this.Nbrhood});
 }
 

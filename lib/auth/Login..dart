@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ptint/3/HomesScreen.dart';
 import 'package:ptint/auth/SignIn.dart';
-import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
 
 /*   Future mapSendAttachmentEventToState(SendAttachmentEvent event) async {

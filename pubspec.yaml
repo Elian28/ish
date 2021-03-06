@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -81,20 +81,27 @@ dependencies:
   motion_tab_bar: ^0.1.5
   open_file: ^3.0.3
   path: ^1.7.0
-  path_provider: ^1.6.24
-
+  #path_provider: ^1.6.24
+  provider: ^4.3.3
   printing: null
   scoped_model: ^1.1.0
   searchable_dropdown: ^1.1.3
   shape_of_view: ^1.0.2
 
-  shared_preferences: ^0.5.12+2
   sk_onboarding_screen: null
   sliding_sheet: ^0.4.1
   splashscreen: ^1.3.5
 
   url_launcher: ^5.7.0
   geocoder: ^0.2.1
+  badges: ^1.1.6
+  collection: ^1.14.13
+  bloc:
+  flutter_bloc:
+  shared_preferences: ^0.5.12+4
+  google_sign_in:
+  animator: ^2.0.2
+
 
 dev_dependencies:
   flutter_localizations:
@@ -102,6 +109,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.8.1
+
 
 flutter_icons:
   ios: true

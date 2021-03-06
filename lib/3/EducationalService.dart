@@ -15,13 +15,15 @@ import 'package:ptint/themes/LightColor.dart';
 import '../Server/help.dart';
 import 'HomesScreen.dart';
 
-class News extends StatefulWidget {
+// خدمة تعليمية
+class EducationalService extends StatefulWidget {
   @override
-  _NewsState createState() => _NewsState();
+  _EducationalServiceState createState() => _EducationalServiceState();
 }
 
 //
-class _NewsState extends State<News> with SingleTickerProviderStateMixin {
+class _EducationalServiceState extends State<EducationalService>
+    with SingleTickerProviderStateMixin {
   // AnimationController _controller;
 
   var _autovalidate = false;
@@ -46,7 +48,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   }
 
   List txt = [
-    "1- طباعة",
+    "1- لوقو",
     "2- اعداد الابحاث لطلاب الكليات",
     "3- اجراء التحاليل الاحصائية لطلاب المجاستير",
     "4- كتابة الرسائل العلمية",
@@ -57,7 +59,8 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     "9- طباعة الابحاث والرسائل سواء التى تمت كتابتها\n في المركز او التى كتبها العميل بنفسة.",
     "10-اوراق عمل",
     "11-شهاداتت شكر بالتغليف ",
-    "12-اخرى"
+    "12-سيرة ذاتية",
+    "13- اخرى"
   ];
 //TODO
   Future getidUsers() async {
@@ -81,7 +84,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
             return Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => AddBook()));
           }),
-      appBar: AppBar(centerTitle: true, title: Text("صفحة الطلبات")),
+      appBar: AppBar(centerTitle: true, title: Text("الخدمة التعليمية")),
       body: _osLoading ? _logadin(context) : _form(context),
     );
   }

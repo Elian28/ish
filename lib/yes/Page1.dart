@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ptint/3/_New.dart';
+import 'package:ptint/3/EducationalService.dart';
 
 import 'package:ptint/3/app.dart';
 import 'package:ptint/Books2/Bookas.dart';
@@ -96,7 +97,8 @@ class _CarouselWithIndicatorState extends State<Page1> {
                               "\nكتب \nمستعملة\n",
                               Booksa(),
                             ),
-                            iconPage("\nخدمة\nالتعليمية\n", News())
+                            iconPage(
+                                "\nخدمة\nالتعليمية\n", EducationalService())
                           ]),
                     ),
                     //AppTheme.divider,
@@ -356,8 +358,15 @@ class _CarouselWithIndicatorState extends State<Page1> {
     );
   }
  */
+  Future startSearch(String query) async {
+    var listQuery = FirebaseFirestore.instance
+        .collection('all')
+        .where('title', isGreaterThanOrEqualTo: query)
+        .get();
+  }
 
 //البحث
+
   Widget _search() {
     return Container(
       margin: AppTheme.padding,
@@ -370,14 +379,19 @@ class _CarouselWithIndicatorState extends State<Page1> {
               decoration: BoxDecoration(
                   color: LightColor.lightGrey.withAlpha(100),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "البحث عن المنتجات",
-                    hintStyle: TextStyle(fontSize: 12),
-                    contentPadding:
-                        EdgeInsets.only(left: 10, right: 10, bottom: 0, top: 5),
-                    prefixIcon: Icon(Icons.search, color: Colors.black54)),
+              child: InkWell(
+                onTap: () {
+                  //  startSearch();
+                },
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "البحث عن المنتجات",
+                      hintStyle: TextStyle(fontSize: 12),
+                      contentPadding: EdgeInsets.only(
+                          left: 10, right: 10, bottom: 0, top: 5),
+                      prefixIcon: Icon(Icons.search, color: Colors.black54)),
+                ),
               ),
             ),
           ),

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LongPersonalCard extends StatefulWidget {
-  LongPersonalCard({Key key, this.title}) : super(key: key);
-  final String title;
-
   @override
   _LongPersonalCardState createState() => new _LongPersonalCardState();
 }
@@ -246,8 +243,7 @@ class _LongPersonalCardState extends State<LongPersonalCard> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
-                              SizedBox(height: MediaQuery.of(context).size.height / 20),
-
+                  SizedBox(height: MediaQuery.of(context).size.height / 20),
                   Column(
                     children: <Widget>[
                       Row(
@@ -278,20 +274,3 @@ class _LongPersonalCardState extends State<LongPersonalCard> {
     );
   }
 }
-
-/* وجه واحد
-
-
-
-سلوفان مط
-
-100
-
-
-أكتب ملاحظاتك مع الطلب
-2020-08-01 07:05 AM
-تكلفة الصفحة :  0.4 ق
-تكلفة النسخة :  0.4 ق
-إجمالى التكلفة : 40 ج
-كود الخصم
- */

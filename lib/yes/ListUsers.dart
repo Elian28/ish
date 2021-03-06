@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ptint/1/mn.dart';
 import 'package:ptint/2/AddRequest.dart';
+import 'package:ptint/2/jj.dart';
 import 'package:ptint/Server/help.dart';
+import 'package:ptint/task/task.dart';
 import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
-import '../3/_New.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
 
 class ListUsers extends StatefulWidget {
@@ -28,6 +30,23 @@ class _ListUsersState extends State<ListUsers>
 
   Position _currentPosition;
 
+//!
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  Future<int> _counter;
+
+  Future<void> _incrementCounter() async {
+    final SharedPreferences prefs = await _prefs;
+    final int counter = (prefs.getInt('counter') ?? 0) + 1;
+
+    setState(() {
+      _counter = prefs.setInt("counter", counter).then((bool success) {
+        return counter;
+      });
+    });
+  }
+
+//!
   //Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   double cDis;
@@ -74,6 +93,10 @@ class _ListUsersState extends State<ListUsers>
   @override
   void initState() {
     super.initState();
+
+    _counter = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('counter') ?? 0);
+    });
     _initCurrentLocation();
     //  _initCurrentLocation();
 
@@ -139,6 +162,11 @@ class _ListUsersState extends State<ListUsers>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey[50],
+          elevation: 0,
+          title: Text('قرطاسيات'),
+        ),
         body: _isLoading
             ? _loading(context)
             : (_hasEroor ? _eroor(context, _eroorMassege) : _conTent(context)));
@@ -318,7 +346,7 @@ class _ListUsersState extends State<ListUsers>
                             Container(
                               width: double.infinity,
                               child: Card(
-                                color: Colors.grey[700],
+                                color: Colors.grey[700].withAlpha(9),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -355,15 +383,55 @@ class _ListUsersState extends State<ListUsers>
                                           ),
                                         );
                                       },
-                                      child: Text(
-                                        'ساعات العمل',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 10),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'ساعات العمل',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10),
+                                          ),
+                                          Icon(Icons.timer_sharp),
+                                        ],
                                       ),
                                     ),
-                                    Icon(Icons.av_timer),
+                                    InkWell(
+                                      onTap: () {
+                                        _incrementCounter();
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Center(
+                                              child: FutureBuilder<int>(
+                                                  future: _counter,
+                                                  builder:
+                                                      (BuildContext context,
+                                                          AsyncSnapshot<int>
+                                                              snapshot) {
+                                                    switch (snapshot
+                                                        .connectionState) {
+                                                      case ConnectionState
+                                                          .waiting:
+                                                        return const CircularProgressIndicator();
+                                                      default:
+                                                        if (snapshot.hasError) {
+                                                          return TEXT(
+                                                              txt:
+                                                                  'Error: ${snapshot.error}');
+                                                        } else {
+                                                          return TEXT(
+                                                              color:
+                                                                  Colors.white,
+                                                              txt:
+                                                                  ' ${snapshot.data}${snapshot.data == 1 ? '' : ''}');
+                                                        }
+                                                    }
+                                                  })),
+                                          Icon(Icons.star),
+                                        ],
+                                      ),
+                                    ),
                                     Column(
                                       children: [
                                         Text(

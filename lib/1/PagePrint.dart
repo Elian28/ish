@@ -113,9 +113,7 @@ class _PagePrintState extends State<PagePrint> {
   TimeOfDay selectedTime = TimeOfDay.now();
 
   bool _activation = false;
-/*   TimeOfDay roomBooked =
-      TimeOfDay.fromDateTime(DateTime.parse('2021-10-20 16:30:04Z'));
- */
+
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -144,192 +142,187 @@ class _PagePrintState extends State<PagePrint> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _fromkey,
-      child: SafeArea(
-          child: ListView(children: <Widget>[
-        Container(
-            child: Column(children: <Widget>[
-          /*    Container(
-                    margin: EdgeInsets.fromLTRB(25.0, 68.0, 70.0, 26.0),
-                    child: Text(
-                      'طباعة',
-                      style: TextStyle(fontSize: 35.0),
-                    ),
-                  ),  */
-
-          Column(children: <Widget>[
+    return Scaffold(
+      appBar: AppBar(),
+      body: Form(
+        key: _fromkey,
+        child: SafeArea(
+            child: ListView(children: <Widget>[
+          Container(
+              child: Column(children: <Widget>[
             Column(children: <Widget>[
-              MenuDropDown(
-                  dropdownText: 'حجم الورق',
-                  type: "groomingType",
-                  onChanged: (value) {
-                    paperSize = value;
-                  }),
-              MenuDropDown(
-                  dropdownText: 'نوع الورق',
-                  type: "catBreeds",
-                  onChanged: (value) {
-                    paperType = value;
-                  }),
-              MenuDropDown(
-                  dropdownText: 'لون الورق',
-                  type: "catSize",
-                  onChanged: (value) {
-                    paperColor = value;
-                  }),
-              MenuDropDown(
-                  dropdownText: 'جوانب الطباعة',
-                  type: "addOnServices",
-                  onChanged: (value) {
-                    aspectsPrinting = value;
-                  }),
-              MenuDropDown(
-                  dropdownText: 'خيارات التغليف',
-                  type: "packagingOptions",
-                  onChanged: (value) {
-                    packagingOptions = value;
-                  }),
-              SizedBox(height: 10),
-              Container(
-                width: 320,
-                child: TextFormField(
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.fromLTRB(35.0, 10.0, 0, 10.0),
-                    hintText: ' ',
-                    hintStyle: TextStyle(fontSize: 15.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                  ),
-                  onChanged: (value) {
-                    _txtDescription = value;
-                  },
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  buildOutlineButton(
-                    icon: Icons.remove,
-                    press: () {
-                      if (numOfItems > 1) {
-                        setState(() {
-                          numOfItems--;
-                        });
-                      }
+              Column(children: <Widget>[
+                MenuDropDown(
+                    dropdownText: 'نوع الكرت',
+                    type: "groomingType",
+                    onChanged: (value) {
+                      paperSize = value;
+                    }),
+                MenuDropDown(
+                    dropdownText: 'وجهه الطباعة',
+                    type: "catBreeds",
+                    onChanged: (value) {
+                      paperType = value;
+                    }),
+                MenuDropDown(
+                    dropdownText: 'الوزن',
+                    type: "catSize",
+                    onChanged: (value) {
+                      paperColor = value;
+                    }),
+                MenuDropDown(
+                    dropdownText: 'نوع القصة',
+                    type: "addOnServices",
+                    onChanged: (value) {
+                      aspectsPrinting = value;
+                    }),
+                MenuDropDown(
+                    dropdownText: 'نوع السلفان',
+                    type: "packagingOptions",
+                    onChanged: (value) {
+                      packagingOptions = value;
+                    }),
+                SizedBox(height: 10),
+                Container(
+                  width: 320,
+                  child: TextFormField(
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(35.0, 10.0, 0, 10.0),
+                      hintText: ' ',
+                      hintStyle: TextStyle(fontSize: 15.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0)),
+                    ),
+                    onChanged: (value) {
+                      _txtDescription = value;
                     },
                   ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40 / 2),
-                      child: Text(
-                        // if our item is less  then 10 then  it shows 01 02 like that
-                        numOfItems.toString().padLeft(2, "0"),
-                        style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    buildOutlineButton(
+                      icon: Icons.remove,
+                      press: () {
+                        if (numOfItems > 1) {
+                          setState(() {
+                            numOfItems--;
+                          });
+                        }
+                      },
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40 / 2),
+                        child: Text(
+                          // if our item is less  then 10 then  it shows 01 02 like that
+                          numOfItems.toString().padLeft(2, "0"),
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
                       ),
                     ),
-                  ),
-                  buildOutlineButton(
-                      icon: Icons.add,
-                      press: () {
-                        setState(() {
-                          numOfItems++;
-                        });
-                      }),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(1.0, 14, 1, 0),
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        TEXT(
-                            txt: "تاريخ التسليم",
-                            color: LightColor.titleTextColor),
+                    buildOutlineButton(
+                        icon: Icons.add,
+                        press: () {
+                          setState(() {
+                            numOfItems++;
+                          });
+                        }),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(1.0, 14, 1, 0),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          TEXT(
+                              txt: "تاريخ التسليم",
+                              color: LightColor.titleTextColor),
+                          Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              width: 130,
+                              height: 60,
+                              margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
+                              child: RaisedButton(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  elevation: 0,
+                                  child: Text(_activation != false
+                                      ? "تاريخ التسليم:"
+                                      : "${selectedDate.toLocal()}"
+                                          .split(' ')[0]),
+                                  // Text('اختر موعدا', style: TextStyle(fontSize: 12.0)),
+                                  onPressed: () => _selectDate(context))),
+                        ],
+                      ),
+                      Column(children: [
                         Container(
+                            // margin: EdgeInsets.fromLTRB(20.0, 14, 20, 0),
+                            child: TEXT(
+                                txt: "وقت التسليم",
+                                color: LightColor.titleTextColor)),
+                        Container(
+                            width: 140,
+                            height: 60,
+                            //  margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
+                            // decoration: BoxDecoration(),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.rectangle,
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
-                            width: 130,
-                            height: 60,
-                            margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
                             child: RaisedButton(
                                 color: Colors.white,
+                                child: Text(
+                                    _activation == true
+                                        ? 'اختر الوقت'
+                                        : " ${selectedTime.format(context)}",
+                                    style: TextStyle(fontSize: 12.0)),
+                                // : Text(" ${selectedTime.format(context)}"),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0),
                                 ),
                                 elevation: 0,
-                                child: Text(_activation != false
-                                    ? "تاريخ التسليم:"
-                                    : "${selectedDate.toLocal()}"
-                                        .split(' ')[0]),
-                                // Text('اختر موعدا', style: TextStyle(fontSize: 12.0)),
-                                onPressed: () => _selectDate(context))),
-                      ],
-                    ),
-                    Column(children: [
-                      Container(
-                          // margin: EdgeInsets.fromLTRB(20.0, 14, 20, 0),
-                          child: TEXT(
-                              txt: "وقت التسليم",
-                              color: LightColor.titleTextColor)),
-                      Container(
-                          width: 140,
-                          height: 60,
-                          //  margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
-                          // decoration: BoxDecoration(),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: RaisedButton(
-                              color: Colors.white,
-                              child: Text(
-                                  _activation == true
-                                      ? 'اختر الوقت'
-                                      : " ${selectedTime.format(context)}",
-                                  style: TextStyle(fontSize: 12.0)),
-                              // : Text(" ${selectedTime.format(context)}"),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 0,
-                              onPressed: () => _selectTime(context))),
-                    ]),
-                  ],
+                                onPressed: () => _selectTime(context))),
+                      ]),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 15.0, 0, 0),
-                width: 75.0,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12.0)),
-                child: FlatButton(
-                    child: Text("التالي"),
-                    onPressed:
-                        _save /* () {
-                          /*   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ConfirmationOrder(
-                                        addressText: addressText,
-                                        addNotes: addNotes))); */
-                        } */
-                    ),
-              )
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 15.0, 0, 0),
+                  width: 75.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: FlatButton(
+                      child: Text("التالي"),
+                      onPressed:
+                          _save /* () {
+                            /*   Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ConfirmationOrder(
+                                          addressText: addressText,
+                                          addNotes: addNotes))); */
+                          } */
+                      ),
+                )
+              ])
             ])
-          ])
-        ]))
-      ])),
+          ]))
+        ])),
+      ),
     );
   }
 
@@ -416,21 +409,24 @@ class _MenuDropDownState extends State<MenuDropDown> {
   String selectedItem;
   List<String> dropdownItems = [];
 
-  List<String> groomingTypeList = ['A1', 'A2', 'A3', 'A4', 'A5'];
-  List<String> catSizeList = ["عادي", "لماع", "مقوى"];
-
-  List<String> addOnServicesList = ["أسود", "ملون"];
-
-  List<String> catBreedsList = ['وجهه', 'وجهين'];
-  List<String> packagingOptions = [
-    "بدون تغليف عدد الأوراق غير محدود",
-    "تدبيس ركن ",
-    "تدبيس جانبي",
-    "سلك",
-    "بلاستك حلزوني",
-    "تخييط",
-    "كعب مسمار"
+  List<String> groomingTypeList = [
+    " كرت سميك حراري"
+        "بطاقات بلاستيك id",
+    "كرت شفاف",
+    "كرت فيزيت سميك نافر مقرم الزوايا",
+    "كرت فيزيت عادي",
+    "كرت مقمش",
+    "كروت البسة",
+    "كروت مغناطيس"
   ];
+  List<String> catBreedsList = ['وجهه', 'وجهين'];
+
+  List<String> catSizeList = ["250 غرام", "350 غرام"];
+
+  List<String> addOnServicesList = ["قصة خاصة", "مقرم"];
+  List<String> addOnServicesList1 = ["عامودي", "افقس"];
+
+  List<String> packagingOptions = ["سلفان لميع", "سلفان مت ناشف"];
 
   List<String> getListBasedOnName(String value) {
     print(value);
@@ -509,3 +505,5 @@ class _MenuDropDownState extends State<MenuDropDown> {
                     }))));
   }
 }
+
+//

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ptint/3/EducationalService.dart';
 import 'package:ptint/3/app.dart';
 import 'package:ptint/card/PersonalCards.dart';
 import 'package:ptint/card/cra.dart';
 import 'package:ptint/staye/printNew.dart';
-import '../3/_New.dart';
 import '_GradientPainter.dart';
 
 // الطباعة صفحة الرئيسية حقت
@@ -60,9 +60,7 @@ class _PriState extends State<Pri> {
                 "111111",
                 ////"https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                 BoxFit.cover,
-                Cards(
-
-                )),
+                Cards()),
             _categories(
                 "بروشور / فلاير ",
                 ////"https://khamsat.hsoubcdn.com/images/services/57MediaQuery.of(context).size.height / 5526/ebb9c2b1b81de20669d8126548216ac6.jpg",
@@ -282,8 +280,8 @@ Widget form(BuildContext context) {
           strokeWidth: 2,
           radius: 16,
           gradient: LinearGradient(
-            //TODO
-             colors: [Colors.black, Colors.redAccent] ),
+              //TODO
+              colors: [Colors.black, Colors.redAccent]),
           child: Text('اقرب قرطاسية', style: TextStyle(fontSize: 16)),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -293,11 +291,7 @@ Widget form(BuildContext context) {
         UnicornOutlineButton(
           strokeWidth: 2,
           radius: 16,
-          gradient: LinearGradient(
-            
-            
-            
-            colors: [Colors.black, Colors.redAccent ]),
+          gradient: LinearGradient(colors: [Colors.black, Colors.redAccent]),
           child: Text('ارسل غرض', style: TextStyle(fontSize: 16)),
           onPressed: () {},
         ),
@@ -307,8 +301,8 @@ Widget form(BuildContext context) {
           gradient: LinearGradient(colors: [Colors.black, Colors.redAccent]),
           child: Text('اطلب خدمة', style: TextStyle(fontSize: 16)),
           onPressed: () {
-            return Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) => News()));
+            return Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => EducationalService()));
           },
         ),
       ],

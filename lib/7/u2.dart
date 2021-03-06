@@ -9,15 +9,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ptint/1/ListPrint.dart';
 import 'package:ptint/1/mmm1.dart';
 import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as p;
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+
+class Item {
+  final String title;
+  final double count;
+  bool isCheck;
+  Item({this.title, this.count, this.isCheck});
+}
+
+class CartPdf extends ChangeNotifier {
+  List<Item> _items = [];
+  double _totaPrice = 0.0;
+
+  void add(Item items) {
+    _items.add(items);
+    _totaPrice += items.count;
+    notifyListeners();
+  }
+
+  void remove(Item items) {
+    _totaPrice -= items.count;
+    _items.remove(items);
+    notifyListeners();
+  }
+
+  int get count {
+    return _items.length;
+  }
+
+  double get totaPrice {
+    return totaPrice;
+  }
+
+  List<Item> get basketItems {
+    return _items;
+  }
+}
 
 class UploadFile extends StatefulWidget {
   @override
@@ -26,6 +62,7 @@ class UploadFile extends StatefulWidget {
 
 class _UploadFileState extends State<UploadFile> {
   bool isSelected = false;
+  File pickedImage;
   List savePdf = [];
   int _radioValue = -1;
   String radioValue;
@@ -33,28 +70,32 @@ class _UploadFileState extends State<UploadFile> {
   var _autovalidate = false;
   bool isLoading = true;
   bool activation = true;
+  String imagepath;
 
   PDFDocument document;
+  List saveImg = [];
 
-//!
+  //!
 
-  Future<String> download(String url, String filename) async {
-    String dir = (await getTemporaryDirectory()).path;
-    File file = File('$dir/$filename');
-    if (await file.exists()) return file.path;
-    await file.create(recursive: true);
-    var response = await http.get(url).timeout(Duration(seconds: 60));
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  Future<int> _counter;
 
-    if (response.statusCode == 200) {
-      await file.writeAsBytes(response.bodyBytes);
-      return file.path;
-    }
-    throw 'Download ${url} failed';
+  Future<void> _incrementCounter() async {
+    final SharedPreferences prefs = await _prefs;
+    final int counter = (prefs.getInt('counter') ?? 0) + 1;
+
+    setState(() {
+      _counter = prefs.setInt("counter", counter).then((bool success) {
+        return counter;
+      });
+    });
   }
 
-  void downloadAndLaunch({String url, String filename}) {
-    download(url, filename).then((String path) {
-      OpenFile.open(path);
+  @override
+  void initState() {
+    super.initState();
+    _counter = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('counter') ?? 0);
     });
   }
 
@@ -65,21 +106,14 @@ class _UploadFileState extends State<UploadFile> {
     loadNbrhood();
     nameXstr();
     //  hotelstr();
-    return Column(
-      children: [
-        RaisedButton(
-          onPressed: () {
-            downloadAndLaunch(
-                url:
-                    'https://firebasestorage.googleapis.com/v0/b/renad-b67fc.appspot.com/o/6900.pdf?alt=media&token=bfb768a9-a792-4ce9-a644-b3cc186892f4',
-                filename: '');
-          },
-        ),
-        Container(
-            height: MediaQuery.of(context).size.height / 1.7,
-            child: Scaffold(
-                body: SingleChildScrollView(
-                    child: Column(children: <Widget>[
+    return Container(
+        height: MediaQuery.of(context).size.height / 1.7,
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text("طباعة"),
+            ),
+            body: SingleChildScrollView(
+                child: Column(children: <Widget>[
               isLoading == false
                   ? Padding(
                       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -118,10 +152,80 @@ class _UploadFileState extends State<UploadFile> {
                               child: TEXT(
                                   txt: "  اضافة ملف اخر  ",
                                   color: LightColor.kShrineSurfaceWhite)))),
-            ])))),
-      ],
+              buildGridView()
+            ]))));
+  }
+
+  Widget viewImage() {
+    if (imagepath == null) {
+      return Icon(Icons.cloud_download, color: Colors.grey, size: 90);
+    } else {
+      return Image.file(
+        File(imagepath),
+        fit: BoxFit.cover,
+        // width: MediaQuery.of(context).size.width / 5,
+        // height: MediaQuery.of(context).size.height / 2.3,
+      );
+    }
+  }
+
+  Widget buildGridView1() {
+    return Container(
+      height: 100.0,
+      child: GridView.builder(
+          scrollDirection: Axis.horizontal,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+          itemCount: saveImg.length,
+          itemBuilder: (BuildContext context, int index) {
+            /* 
+            images: _images.map((GallariesModel image) {
+      return new NetworkImage(
+       "www.imagelink.com/"+image.file));
+      }).toList(),
+             */
+            return Row(
+                children: saveImg.map((imageModel) {
+              return InkWell(
+                  enableFeedback: false,
+                  excludeFromSemantics: false,
+                  radius: 90,
+                  canRequestFocus: false,
+                  autofocus: false,
+                  child: Image.file(
+                    imageModel,
+                    width: 160,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      pickedImage = imageModel;
+                    });
+                  });
+            }).toList());
+          }),
     );
   }
+
+  Widget buildGridView() {
+    return SizedBox(
+        height: 200.0,
+        width: double.infinity,
+        child: new GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 9,
+              crossAxisSpacing: 0.1,
+            ),
+            //scrollDirection: Axis.horizontal,
+            itemCount: saveImg.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: GestureDetector(
+                      child: Image.file(pickedImage, width: 200, height: 200)));
+            }));
+  }
+//
 
   void uploadPhotos() {
     showCupertinoModalPopup(
@@ -130,6 +234,17 @@ class _UploadFileState extends State<UploadFile> {
           return CupertinoActionSheet(
               message: Text("اضف صورة"),
               actions: <Widget>[
+                CupertinoActionSheetAction(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("      الصور       ",
+                              style: TextStyle(color: Colors.black)),
+                          Icon(Ionicons.ios_images, color: Colors.blue)
+                        ]),
+                    onPressed: () {
+                      _loadPicker(ImageSource.gallery);
+                    }),
                 CupertinoActionSheetAction(
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -153,6 +268,20 @@ class _UploadFileState extends State<UploadFile> {
         });
   }
 
+  File _image;
+
+  _loadPicker(ImageSource source) async {
+    File picked = await ImagePicker.pickImage(source: source);
+    if (picked != null) {
+      _cropImage(picked).then((File cropped) {
+        saveImage(cropped.path);
+        saveImg.add(cropped);
+      });
+    }
+    loadImage();
+    Navigator.pop(context);
+  }
+
   String url;
   savePdfdata(List<int> asset, String name) async {
     Reference reference = FirebaseStorage.instance.ref().child(name);
@@ -166,6 +295,7 @@ class _UploadFileState extends State<UploadFile> {
   File file;
   loadDocument() async {
     //-------------
+    SharedPreferences move = await SharedPreferences.getInstance();
     FilePickerResult result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
@@ -190,8 +320,7 @@ class _UploadFileState extends State<UploadFile> {
         print("Error: message here");
       }
     }
-    downloadAndLaunch(url: result.files.single.path, filename: 'pdf.pdf');
-    //----------------url: result.files.single.path, filename: ''
+    //-----------------
   }
 
   Widget viewPdf() {
@@ -374,6 +503,43 @@ class _UploadFileState extends State<UploadFile> {
                               }))
                       : Text(""),
                 ]))));
+  }
+
+  void saveImage(path) async {
+    SharedPreferences saveimage = await SharedPreferences.getInstance();
+    saveimage.setString("imagepath", path);
+  }
+
+  void loadImage() async {
+    SharedPreferences saveimage = await SharedPreferences.getInstance();
+    setState(() {
+      imagepath = saveimage.getString("imagepath");
+    });
+  }
+
+//
+  Future<File> _cropImage(File picked) async {
+    File cropped = await ImageCropper.cropImage(
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: "Modifica immagine",
+        statusBarColor: Colors.green,
+        toolbarColor: Colors.green,
+        toolbarWidgetColor: Colors.white,
+      ),
+      sourcePath: picked.path,
+//      aspectRatioPresets: [
+//        CropAspectRatioPreset.original,
+//        CropAspectRatioPreset.ratio16x9,
+//        CropAspectRatioPreset.ratio4x3,
+//      ],
+      maxWidth: 800,
+    );
+    if (cropped != null) {
+      setState(() {
+        pickedImage = cropped;
+      });
+    }
+    return cropped;
   }
 
   var idUsers;
@@ -957,6 +1123,7 @@ class _UploadFileState extends State<UploadFile> {
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 15.0, 0, 0),
+                        width: 75.0,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.rectangle,

@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'ListPrint.dart';
 

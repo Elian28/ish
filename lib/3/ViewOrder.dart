@@ -7,7 +7,7 @@ import 'package:ptint/Widget/RAISEDBUTTON.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';
 import 'Bills.dart';
-import '_New.dart';
+import 'EducationalService.dart';
 
 class ViewOrder extends StatefulWidget {
   @override
@@ -99,8 +99,8 @@ class _ViewOrderState extends State<ViewOrder>
         backgroundColor: Colors.blue[700],
         child: Icon(Icons.add),
         onPressed: () {
-          return Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context) => News()));
+          return Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => EducationalService()));
         },
       ),
 /*         floatingActionButton: FloatingActionButton(

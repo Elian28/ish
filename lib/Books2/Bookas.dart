@@ -12,7 +12,6 @@ class Booksa extends StatefulWidget {
 }
 
 class _BooksaState extends State<Booksa> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +64,6 @@ class _BooksaState extends State<Booksa> {
                         elevation: 0,
                         child: Stack(
                           children: <Widget>[
-                            
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
