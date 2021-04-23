@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
-
+/* import 'package:flutter_svg/svg.dart';
+ */
 class DetailsScreen extends StatelessWidget {
   final Product product;
 
@@ -378,3 +378,4 @@ List<Product> products = [
 
 String dummyText =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
+ */

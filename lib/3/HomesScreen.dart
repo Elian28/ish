@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ptint/PagPrint/arrayHome.dart';
 import 'package:ptint/Step/ViewPagePrint.dart';
-import 'package:ptint/yes/Page1.dart';
 
 import 'ViewOrder.dart';
-import 'app.dart';
 
 class HomesScreen extends StatefulWidget {
+  static String routeName = "/home";
+
   @override
   _HomesScreenState createState() => _HomesScreenState();
 }
@@ -115,8 +116,8 @@ class _HomesScreenState extends State<HomesScreen>
           body: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              //   HomePag(),
-              Page1(),
+              ArrayHome(),
+              // Page1(),
 
               ViewPagePrint(),
               ViewOrder(),

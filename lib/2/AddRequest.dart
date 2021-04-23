@@ -29,7 +29,7 @@ class _AddRequestState extends State<AddRequest> {
       body: Column(
         children: [
           Text("data"),
-          Text("تقييمات المستخدمين"),
+          //  Text("تقييمات المستخدمين"),
           Text("الموقع"),
           Text("اوقات العمل"),
           RaisedButton(child: Text("اكتب الطلب"), onPressed: _form),

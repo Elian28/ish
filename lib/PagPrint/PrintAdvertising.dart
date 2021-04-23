@@ -1,13 +1,25 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:badges/badges.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ptint/Hype/Balloons.dart';
+import 'package:ptint/Hype/Cards/fff.dart';
+import 'package:ptint/Hype/Flags.dart';
+import 'package:ptint/Hype/HatOrHat.dart';
+import 'package:ptint/Hype/Notebooks.dart';
+import 'package:ptint/Hype/SweetsBoxes.dart';
+import 'package:ptint/Hype/cup.dart';
 import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
+import 'package:ptint/themes/TitleText.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Player {
   int id;
@@ -25,23 +37,23 @@ class PrintAdvertising extends StatefulWidget {
 class _PrintRestaurantsState extends State<PrintAdvertising> {
   List<Widget> onTap1 = [];
   List list = [
-    "أعلام الطاولة \nمع قاعدة حديد",
+    "أعلام الطاولة مع \nقاعدة حديد",
     // "دعاسات سيارات",
     "دفاتر دعاية",
     "طباعة بلونات",
     //  "طباعة ساعات حائط",
     "طباعة طاقية او قبعة",
     "طباعة علب الحلويات\n الفاخرة",
-    "طباعة فنجان او اكواب",
-    "علم المقام السارية",
+    "طباعة فنجان او\nاكواب",
+    //  "علم المقام السارية",
     "علم شراعية",
-    " usb ",
-    "ولاعة",
+    //  " usb ",
+    //  "ولاعة",
     "لافتة طرقية",
-    "اكواب أو فنجان سحري",
+    "اكواب أو فنجان \nسحري",
     "ميداليات مفاتيح\n مستطيلة حديد",
-    "ميداليات مفاتيح دائرية",
-    "وراقات مكتبية\n مع ورق ملاحظات",
+    "ميداليات مفاتيح \nدائرية",
+    "وراقات مكتبية مع \nورق ملاحظات",
     "اقلام معدن فاخرة",
     "بروشات",
     "أقلام معدن",
@@ -71,20 +83,47 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
     'https://image.freepik.com/free-vector/saudi-arabia-independence-day-template_96807-157.jpg',
   ];
 
+  List<dynamic> onTaps = [
+    Flags(),
+    Notebooks(),
+    Balloons(),
+    HatOrHat(),
+    SweetsBoxes(),
+    Cup(),
+  ];
+
   bool show = false;
   bool _actualLinear = false;
   bool _actualSymbolic = false;
+  Box<String> friendsBox;
 
   List<Player> _availablePlayers = [];
-  List<Player> _selectedPlayers = [];
   File _image;
   @override
   void initState() {
     super.initState();
+    friendsBox = Hive.box<String>("friends");
     _availablePlayers = [
       Player(id: 0, name: "مصمم", picture: "test"),
       Player(id: 1, name: "لدي تصميم", picture: "test"),
     ];
+  }
+
+  //  number();
+  Widget setupAlertDialoadContainer1() {
+    return Container(
+      height: 300.0, // Change as per your requirement
+      width: 300.0, // Change as per your requirement
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 22,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text('Gujarat, India'),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -95,6 +134,25 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
         appBar: AppBar(
           elevation: 0,
           title: Text("مطبوعات الدعاية"),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Container(
+                  child: Badge(
+                badgeColor: LightColor.iconColor,
+                badgeContent: Text(
+                  "",
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: IconButton(
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => CartScreen()));
+                    }),
+              )),
+            )
+          ],
         ),
         body: viewbook());
   }
@@ -102,9 +160,9 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
   Widget viewbook() {
     double width = AppTheme.fullWidth(context);
     double height = AppTheme.fullHeight(context);
-    return Column(
+    return ListView(
       children: [
-        Card(
+/*         Card(
           shape:
               OutlineInputBorder(borderSide: BorderSide(color: Colors.black54)),
           //    b: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -121,7 +179,33 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                           _selectPlayer();
                         })))
           ]),
-        ),
+        ), */
+/*         Container(
+          height: 300,
+          child: ValueListenableBuilder(
+            valueListenable: friendsBox.listenable(),
+            builder: (context, Box<String> friends, _) {
+              return ListView.separated(
+                  itemBuilder: (context, index) {
+                    final key = friends.keys.toList()[index];
+                    final value = friends.get(key);
+
+                    return ListTile(
+                      title: Text(
+                        value,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                      subtitle: Text(key,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18)),
+                    );
+                  },
+                  separatorBuilder: (_, index) => Divider(),
+                  itemCount: friends.keys.toList().length);
+            },
+          ),
+        ), */
         Container(
             height: 600,
             child: GridView.builder(
@@ -169,9 +253,7 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                                       RichText(
                                           text: TextSpan(children: [
                                         TextSpan(
-                                            text: list[index]
-                                                .toString()
-                                                .toString(),
+                                            text: list[index].toString(),
                                             style: TextStyle(
                                                 color: Colors.black54,
                                                 fontWeight: FontWeight.bold,
@@ -196,7 +278,16 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                                         _selectPlayer();
                                       });
                                     } else {
-                                      Fluttertoast.showToast(
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: onTaps[index],
+                                            );
+                                          });
+
+                                      //  _A123();
+                                      /*   Fluttertoast.showToast(
                                           msg: "تم اضافة المنتج",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.CENTER,
@@ -206,9 +297,27 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                                           fontSize: MediaQuery.of(context)
                                                   .size
                                                   .height /
-                                              35);
+                                              35); */
                                     }
                                   },
+                                  /*   onTap: () {
+                                    A123();
+                                  },
+ */
+                                  //() {
+
+                                  /*     if (_actualSymbolic == false ||
+                                        _actualLinear == false) {
+                                      setState(() {
+                                        _actualSymbolic = true;
+                                        _actualLinear = true;
+                                        _selectPlayer();
+                                      });
+                                    } else {
+                                      A123();
+                                      //return onTap[index];
+                                    } */
+                                  // },
                                   /* () {
                                         /*     Navigator.of(context).push(MaterialPageRoute(
                                             builder: (BuildContext context) => onTap[index])); */
@@ -249,6 +358,7 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                     width: 150,
                     height: 150,
                     child: Card(
+                        //
                         child: FlatButton(
                             child: Text("انشاء تصميم"),
                             onPressed: () {
@@ -263,17 +373,18 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                                               Text("انشاء تصميم"),
                                               Icon(Icons.add)
                                             ]),
-                                            onPressed: () {
-                                              if (_actualSymbolic == true ||
+                                            onPressed: _selectPlayer1() //() {
+                                            /*           if (_actualSymbolic == true ||
                                                   _actualLinear == true) {
                                                 setState(() {
                                                   _actualSymbolic = false;
                                                   _actualLinear = false;
-                                                  return _selectPlayer();
+                                              
                                                 });
                                               } else {
                                                 Fluttertoast.showToast(
-                                                    msg: "قوم باضافة منتج",
+                                                    msg:
+                                                        "تم ارسال الطلب وسيتم الرد عليك في اقرب وقت",
                                                     toastLength:
                                                         Toast.LENGTH_SHORT,
                                                     gravity:
@@ -289,7 +400,9 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                                                                 .height /
                                                             35);
                                               }
-                                            }))),
+                                            } */
+
+                                            ))),
                                 Container(
                                     width: 150,
                                     height: 150,
@@ -427,13 +540,15 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
                 child: Text('ارسال الطلب'),
                 onPressed: () {
                   Fluttertoast.showToast(
-                      msg: "",
+                      msg: "تم ارسال الطلب وسيتم الرد عليك في اقرب وقت",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
                       backgroundColor: LightColor.iconColor,
                       textColor: LightColor.titleTextColor,
                       fontSize: MediaQuery.of(context).size.height / 35);
+
+                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -533,5 +648,348 @@ class _PrintRestaurantsState extends State<PrintAdvertising> {
             ],
           );
         });
+  }
+
+//!المحتوى الداخلي
+
+  _A123() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(actions: <Widget>[
+          Column(
+            children: <Widget>[
+              // SizedBox(height: 70,),
+              Text(
+                ' نوع الورق',
+                style: TextStyle(
+                    // fontSize: _mediaQuery.height / 40,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w900),
+              ),
+              // نوع الورق
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 0,
+                      groupValue: null,
+                      onChanged: null),
+
+                  Text(
+                    'عادي',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 1,
+                      groupValue: null,
+                      onChanged: null),
+                  Text(
+                    'فلم ابيض',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  //
+                ],
+              ),
+              Text(
+                ' لون الحبر',
+                style: TextStyle(
+                    //   fontSize: _mediaQuery.height / 40,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w900),
+              ),
+              // لون الطباعة
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 0,
+                      groupValue: null,
+                      onChanged: null),
+                  Text(
+                    'اسود',
+                    // style: TextStyle(fontSize: _mediaQuery.height / 50),
+                  ),
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 1,
+                      groupValue: null,
+                      onChanged: null),
+                  Text(
+                    'ملون',
+                    //  style: TextStyle(fontSize: _mediaQuery.height / 50),
+                  ),
+                ],
+              ),
+              SizedBox(
+                  // height: _mediaQuery.height / 40,
+                  ),
+              Text(
+                "خيارات التغليف",
+                style: TextStyle(
+                    //  fontSize: _mediaQuery.height / 40,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w900),
+              ),
+              // خيارات التغليف
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 0,
+                      groupValue: null,
+                      onChanged: null),
+                  Text(
+                    'بدون تغليف',
+                    // style: TextStyle(fontSize: _mediaQuery.height / 50),
+                  ),
+                  Radio(
+                      activeColor: Colors.blue,
+                      value: 1,
+                      groupValue: null,
+                      onChanged: null),
+                  Text(
+                    'حافظ انبوبي',
+                    // style: TextStyle(fontSize: _mediaQuery.height / 50),
+                  ),
+                ],
+              ),
+
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("اذا كنت تريد حفظ الملخص"),
+                          FlatButton(
+                            child: Text(
+                              "اضغط هنا",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              /*     Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => AddPrint())); */
+                            },
+                          ),
+                        ],
+                      ),
+                      RaisedButton(
+                          color: Colors.cyan[400],
+                          child: Text("طباعة"),
+                          onPressed: () async {
+                            Navigator.pop(context);
+
+                            Fluttertoast.showToast(
+                                msg: "تم ارسال الطلب بنجاح ",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.cyan[800],
+                                textColor: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.height / 35);
+                          })
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )
+        ]);
+      },
+    );
+  }
+
+  int numOfItems = 1;
+  bool _activation = false;
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+/*   TimeOfDay roomBooked =
+      TimeOfDay.fromDateTime(DateTime.parse('2021-10-20 16:30:04Z'));
+ */
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2021, 10, 1));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (picked != null && picked != selectedTime)
+      setState(() {
+        selectedTime = picked;
+      });
+  }
+
+  SizedBox buildOutlineButton({IconData icon, Function press}) {
+    return SizedBox(
+      width: 40,
+      height: 32,
+      child: OutlineButton(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(13),
+        ),
+        onPressed: press,
+        child: Icon(icon),
+      ),
+    );
+  }
+
+  number() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              buildOutlineButton(
+                icon: Icons.remove,
+                press: () {
+                  if (numOfItems > 1) {
+                    setState(() {
+                      numOfItems--;
+                    });
+                  }
+                },
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40 / 2),
+                  child: Text(
+                    // if our item is less  then 10 then  it shows 01 02 like that
+                    numOfItems.toString().padLeft(2, "0"),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+              ),
+              buildOutlineButton(
+                  icon: Icons.add,
+                  press: () {
+                    setState(() {
+                      numOfItems++;
+                    });
+                  }),
+            ],
+          ),
+          Container(
+            width: 320,
+            child: TextFormField(
+              maxLines: 4,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(35.0, 10.0, 0, 10.0),
+                hintText: ' ',
+                hintStyle: TextStyle(fontSize: 15.0),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+              ),
+              onChanged: (value) {
+                //  _txtDescription = value;
+              },
+            ),
+          ),
+          Container(
+              margin: EdgeInsets.fromLTRB(1.0, 14, 1, 0),
+              child: Row(children: [
+                Column(
+                  children: [
+                    TEXT(
+                        txt: "تاريخ التسليم", color: LightColor.titleTextColor),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        width: 130,
+                        height: 60,
+                        margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
+                        child: RaisedButton(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            elevation: 0,
+                            child: Text(_activation != false
+                                ? "تاريخ التسليم:"
+                                : "${selectedDate.toLocal()}".split(' ')[0]),
+                            // Text('اختر موعدا', style: TextStyle(fontSize: 12.0)),
+                            onPressed: () => _selectDate(context))),
+                  ],
+                ),
+                Column(children: [
+                  Container(
+                      // margin: EdgeInsets.fromLTRB(20.0, 14, 20, 0),
+                      child: TEXT(
+                          txt: "وقت التسليم",
+                          color: LightColor.titleTextColor)),
+                  Container(
+                      width: 140,
+                      height: 60,
+                      //  margin: EdgeInsets.fromLTRB(19.0, 0, 20, 0),
+                      // decoration: BoxDecoration(),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: RaisedButton(
+                          color: Colors.white,
+                          child: Text(
+                              _activation == true
+                                  ? 'اختر الوقت'
+                                  : " ${selectedTime.format(context)}",
+                              style: TextStyle(fontSize: 12.0)),
+                          // : Text(" ${selectedTime.format(context)}"),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 0,
+                          onPressed: () => _selectTime(context))),
+                ]),
+              ])),
+          Center(
+            child: RaisedButton(
+              child: Text('ارسال الطلب'),
+              onPressed: () {
+                Fluttertoast.showToast(
+                    msg: "تم ارسال الطلب وسيتم الرد عليك في اقرب وقت",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: LightColor.iconColor,
+                    textColor: LightColor.titleTextColor,
+                    fontSize: MediaQuery.of(context).size.height / 35);
+
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ]);
+      },
+    );
   }
 }

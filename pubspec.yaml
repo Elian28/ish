@@ -101,6 +101,13 @@ dependencies:
   shared_preferences: ^0.5.12+4
   google_sign_in:
   animator: ^2.0.2
+  theme_provider:
+
+  hive: ^1.4.1+1
+  path_provider: ^1.6.5
+  hive_flutter: ^0.3.0+2
+  form_field_validator: ^1.0.1
+  
 
 
 dev_dependencies:
@@ -109,6 +116,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.8.1
+  #flutter_svg:
 
 
 flutter_icons:

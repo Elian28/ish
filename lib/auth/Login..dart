@@ -23,6 +23,8 @@ import 'package:ptint/themes/LightColor.dart';
 enum FormType { login, register }
 
 class Login extends StatefulWidget {
+  static String routeName = "/login";
+
   @override
   _LoginState createState() => _LoginState();
 }

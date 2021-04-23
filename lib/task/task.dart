@@ -22,7 +22,6 @@ class Item {
 
 class Cart extends ChangeNotifier {
   List<Item> _items = [];
-  List<Item> _itemsd;
   double _totaPrice = 0.0;
 
   void add(Item items) {

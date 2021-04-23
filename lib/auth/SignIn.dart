@@ -540,6 +540,7 @@ import 'package:ptint/themes/LightColor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
+  static String routeName = "/sign_in";
   @override
   _SignInState createState() => _SignInState();
 }

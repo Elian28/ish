@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'styles.dart';
 import 'package:flutter/foundation.dart';
@@ -12,24 +11,30 @@ import 'homeAnimation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+class HomeScreen100 extends StatefulWidget {
+  const HomeScreen100({Key key}) : super(key: key);
+
+  static String routeName = "/home";
 
   @override
-  HomeScreenState createState() => new HomeScreenState();
+  HomeScreen100State createState() => new HomeScreen100State();
 }
 
-class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  Animation<double> containerGrowAnimation;
-  AnimationController _screenController;
-  AnimationController _buttonController;
-  Animation<double> buttonGrowAnimation;
-  Animation<double> listTileWidth;
-  Animation<Alignment> listSlideAnimation;
-  Animation<Alignment> buttonSwingAnimation;
-  Animation<EdgeInsets> listSlidePosition;
-  Animation<Color> fadeScreenAnimation;
+class HomeScreen100State extends State<HomeScreen100>
+    with TickerProviderStateMixin {
   var animateStatus = 0;
+  Animation<double> buttonGrowAnimation;
+  Animation<Alignment> buttonSwingAnimation;
+  Animation<double> containerGrowAnimation;
+  Animation<Color> fadeScreenAnimation;
+  int index = new DateTime.now().month;
+  Animation<Alignment> listSlideAnimation;
+  Animation<EdgeInsets> listSlidePosition;
+  Animation<double> listTileWidth;
+  String month = new DateFormat.MMMM().format(
+    new DateTime.now(),
+  );
+
   List<String> months = [
     "January",
     "February",
@@ -44,24 +49,15 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     "November",
     "December"
   ];
-  String month = new DateFormat.MMMM().format(
-    new DateTime.now(),
-  );
-  int index = new DateTime.now().month;
-  void _selectforward() {
-    if (index < 12)
-      setState(() {
-        ++index;
-        month = months[index - 1];
-      });
-  }
 
-  void _selectbackward() {
-    if (index > 1)
-      setState(() {
-        --index;
-        month = months[index - 1];
-      });
+  AnimationController _buttonController;
+  AnimationController _screenController;
+
+  @override
+  void dispose() {
+    _screenController.dispose();
+    _buttonController.dispose();
+    super.dispose();
   }
 
   @override
@@ -76,8 +72,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     fadeScreenAnimation = new ColorTween(
       begin: const Color.fromRGBO(247, 64, 106, 1.0),
       end: const Color.fromRGBO(247, 64, 106, 0.0),
-    )
-        .animate(
+    ).animate(
       new CurvedAnimation(
         parent: _screenController,
         curve: Curves.ease,
@@ -100,8 +95,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     listTileWidth = new Tween<double>(
       begin: 1000.0,
       end: 600.0,
-    )
-        .animate(
+    ).animate(
       new CurvedAnimation(
         parent: _screenController,
         curve: new Interval(
@@ -115,8 +109,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     listSlideAnimation = new AlignmentTween(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-    )
-        .animate(
+    ).animate(
       new CurvedAnimation(
         parent: _screenController,
         curve: new Interval(
@@ -129,8 +122,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     buttonSwingAnimation = new AlignmentTween(
       begin: Alignment.topCenter,
       end: Alignment.bottomRight,
-    )
-        .animate(
+    ).animate(
       new CurvedAnimation(
         parent: _screenController,
         curve: new Interval(
@@ -143,8 +135,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     listSlidePosition = new EdgeInsetsTween(
       begin: const EdgeInsets.only(bottom: 16.0),
       end: const EdgeInsets.only(bottom: 80.0),
-    )
-        .animate(
+    ).animate(
       new CurvedAnimation(
         parent: _screenController,
         curve: new Interval(
@@ -157,11 +148,20 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _screenController.forward();
   }
 
-  @override
-  void dispose() {
-    _screenController.dispose();
-    _buttonController.dispose();
-    super.dispose();
+  void _selectforward() {
+    if (index < 12)
+      setState(() {
+        ++index;
+        month = months[index - 1];
+      });
+  }
+
+  void _selectbackward() {
+    if (index > 1)
+      setState(() {
+        --index;
+        month = months[index - 1];
+      });
   }
 
   Future<Null> _playAnimation() async {

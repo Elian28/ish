@@ -67,14 +67,14 @@ class _UploadFileState extends State<UploadFile> {
     //  hotelstr();
     return Column(
       children: [
-        RaisedButton(
+/*         RaisedButton(
           onPressed: () {
             downloadAndLaunch(
                 url:
                     'https://firebasestorage.googleapis.com/v0/b/renad-b67fc.appspot.com/o/6900.pdf?alt=media&token=bfb768a9-a792-4ce9-a644-b3cc186892f4',
                 filename: '');
           },
-        ),
+        ), */
         Container(
             height: MediaQuery.of(context).size.height / 1.7,
             child: Scaffold(

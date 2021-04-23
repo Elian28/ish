@@ -13,6 +13,21 @@ class Product {
   Product({this.name, this.price, this.isCheck});
 }
 
+class Cart extends ChangeNotifier {
+  List<Product> _items = [];
+  double _totaPrice = 0.0;
+
+  void add(Product items) {
+    _items.add(items);
+    _totaPrice += items.price;
+    notifyListeners();
+  }
+
+  List<Product> get basketItems {
+    return _items;
+  }
+}
+
 class HomeProduct extends StatelessWidget {
   List<Product> items = List.generate(100, (i) {
     return Product(
