@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ptint/login/sized.dart';
 import 'package:ptint/regster/toolstetfeld.dart';
 
@@ -30,15 +29,15 @@ class RegBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     secolCard(
-                      icon: "assets/icons/google-icon.svg",
+                      icon: "assets/icon/app@60x60x1.png",
                       press: () {},
                     ),
                     secolCard(
-                      icon: "assets/icons/facebook-2.svg",
+                      icon: "assets/icon/app@60x60x1.png",
                       press: () {},
                     ),
                     secolCard(
-                      icon: "assets/icons/twitter.svg",
+                      icon: "assets/icon/app@60x60x1.png",
                       press: () {},
                     ),
                   ],

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ptint/Settings/HelpCenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartItemCounter extends ChangeNotifier {
@@ -9,7 +8,6 @@ class CartItemCounter extends ChangeNotifier {
 
   static SharedPreferences sharedPreferences;
   static User user;
-  static FirebaseAuth auth;
   static FirebaseFirestore firestore;
 
   static String collectionUser = "users";
@@ -20,7 +18,6 @@ class CartItemCounter extends ChangeNotifier {
   static final String userName = 'name';
   static final String userEmail = 'email';
   static final String userPhotoUrl = 'photoUrl';
-  static final String userUID = 'uid';
   static final String userAvatarUrl = 'url';
 
   static final String addressID = 'addressID';
@@ -30,12 +27,10 @@ class CartItemCounter extends ChangeNotifier {
   static final String orderTime = 'orderTime';
   static final String isSuccess = 'isSuccess';
 
-  int _counter =
-      sharedPreferences.getStringList(EcommerceApp.userCartList).length - 1;
+  int _counter = sharedPreferences.getStringList(userCartList).length - 1;
   int get count => _counter;
   Future<void> displayedResult() async {
-    int _counter =
-        sharedPreferences.getStringList(EcommerceApp.userCartList).length - 1;
+    int _counter = sharedPreferences.getStringList(userCartList).length - 1;
     await Future.delayed(const Duration(milliseconds: 100), () {
       notifyListeners();
     });

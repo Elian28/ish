@@ -5,15 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "print-master-master-master",
+            "name": "prints-master",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "bug",
-            "cwd": "bug",
+            "name": "prints-master (profile mode)",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "profile"
         }
     ]
 }

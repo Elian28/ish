@@ -101,7 +101,7 @@ class _BalloonsState extends State<Balloons> {
       await file.writeAsBytes(response.bodyBytes);
       return file.path;
     }
-    throw 'Download ${url} failed';
+    throw 'Download $url failed';
   }
 
   void downloadAndLaunch({String url, String filename}) {

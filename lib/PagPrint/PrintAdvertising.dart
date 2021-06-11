@@ -15,6 +15,7 @@ import 'package:ptint/Hype/HatOrHat.dart';
 import 'package:ptint/Hype/Notebooks.dart';
 import 'package:ptint/Hype/SweetsBoxes.dart';
 import 'package:ptint/Hype/cup.dart';
+import 'package:ptint/cart/cartscreen.dart';
 import 'package:ptint/themes/AppTheme.dart';
 import 'package:ptint/themes/LightColor.dart';
 import 'package:ptint/themes/TitleText.dart';

@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/svg.dart';
 import 'package:ptint/login/sized.dart';
 import 'package:ptint/loginsec/secssfly.dart';
 import 'package:ptint/tools/dielog/dieloglogin.dart';
 import 'package:ptint/tools/dielog/errordielog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
 import '../themePprovider.dart';
 import 'erroretextfeld.dart';
 import 'forgetpassword.dart';
@@ -140,7 +138,7 @@ class _SignFormState extends State<SignForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: custemImage(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: custemImage(svgIcon: "assets/icon/Untitled-3@60x60x1.png"),
       ),
     );
   }
@@ -174,7 +172,7 @@ class _SignFormState extends State<SignForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: custemImage(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: custemImage(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }

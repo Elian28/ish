@@ -27,7 +27,7 @@ class _AddressState extends State<Address> {
   String collectionUser = "users";
   String subCollectionAddress = 'userAddress';
 
-  final String userUID = 'uid';
+  var idUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _AddressState extends State<Address> {
                     child: StreamBuilder<QuerySnapshot>(
                   stream: firestore
                       .collection(collectionUser)
-                      .doc(sharedPreferences.getString(userUID))
+                      .doc(sharedPreferences.getString(idUser.uid))
                       .collection(subCollectionAddress)
                       .snapshots(),
                   builder: (context, snapShot) {

@@ -21,7 +21,7 @@ class HomePage123 extends StatelessWidget {
                   size: 30,
                 ),
                 onPressed: () =>
-                    Navigator.of(context).pushNamed(CartScreen.routeName))
+                    Navigator.of(context).pushNamed(CartScreen100.routeName))
           ],
         ),
         body: HomeBody());
@@ -238,7 +238,7 @@ class Products with ChangeNotifier {
 //?
 //!
 
-class CartScreen extends StatelessWidget {
+class CartScreen100 extends StatelessWidget {
   static const routeName = '/cart';
 
   @override

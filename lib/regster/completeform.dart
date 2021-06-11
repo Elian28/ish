@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/svg.dart';
 import 'package:ptint/login/erroretextfeld.dart';
 import 'package:ptint/login/sized.dart';
 import 'package:ptint/loginsec/secssfly.dart';
@@ -9,7 +8,6 @@ import 'package:ptint/tools/dielog/dieloglogin.dart';
 import 'package:ptint/tools/dielog/errordielog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
 import '../themePprovider.dart';
 
 class CompleteProfileForm extends StatefulWidget {
@@ -24,31 +22,6 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
-  static const String appName = 'e-Shop';
-
-  static SharedPreferences sharedPreferences;
-  static User user;
-  static FirebaseAuth auth;
-  static FirebaseFirestore firestore;
-
-  static String collectionUser = "users";
-  static String collectionOrders = "orders";
-  static String userCartList = 'userCart';
-  static String subCollectionAddress = 'userAddress';
-
-  static final String userName = 'name';
-  static final String userEmail = 'email';
-  static final String userPhotoUrl = 'photoUrl';
-  static final String userUID = 'uid';
-  static final String userAvatarUrl = 'url';
-
-  static final String addressID = 'addressID';
-  static final String totalAmount = 'totalAmount';
-  static final String productID = 'productIDs';
-  static final String paymentDetails = 'paymentDetails';
-  static final String orderTime = 'orderTime';
-  static final String isSuccess = 'isSuccess';
-
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _address = TextEditingController();
@@ -72,6 +45,31 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         errors.remove(error);
       });
   }
+
+//!
+
+  SharedPreferences sharedPreferences;
+  User user;
+  FirebaseAuth auth;
+  FirebaseFirestore firestore;
+
+  String collectionUser = "users";
+  String collectionOrders = "orders";
+  String userCartList = 'userCart';
+  String subCollectionAddress = 'userAddress';
+
+  String userName = 'name';
+  String userEmail = 'email';
+  String userPhotoUrl = 'photoUrl';
+  String userUID = 'uid';
+  String userAvatarUrl = 'url';
+
+  String addressID = 'addressID';
+  String totalAmount = 'totalAmount';
+  String productID = 'productIDs';
+  String paymentDetails = 'paymentDetails';
+  String orderTime = 'orderTime';
+  String isSuccess = 'isSuccess';
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +155,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: customSurff(svgIcon: "assets/icons/Phone.svg"),
+        suffixIcon: customSurff(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }
@@ -171,7 +169,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: customSurff(svgIcon: "assets/icons/User.svg"),
+        suffixIcon: customSurff(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }
@@ -199,7 +197,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: customSurff(svgIcon: "assets/icons/User.svg"),
+        suffixIcon: customSurff(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }
@@ -212,10 +210,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         getProportionateScreenWidth(20),
         getProportionateScreenWidth(20),
       ),
-      /*    child: SvgPicture.asset(
+      child: Image.asset(
         svgIcon,
         height: getProportionateScreenWidth(18),
-      ), */
+      ),
     );
   }
 
@@ -247,6 +245,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             email: widget.email.trim(), password: widget.password.trim())
         .then((auth) {
       firebaseUser = auth.user;
+      Route route =
+          MaterialPageRoute(builder: (context) => LoginSuccessScreen());
+      Navigator.pushReplacement(context, route);
     }).catchError((error) {
       Navigator.pop(context);
       return showDialog(
@@ -257,14 +258,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             );
           });
     });
-    if (firebaseUser != null) {
+    /*    if (firebaseUser != null) {
       saveUserInfoToFireStorage(firebaseUser).then((value) {
         print(sharedPreferences.getString("email"));
-        Route route =
-            MaterialPageRoute(builder: (context) => LoginSuccessScreen());
-        Navigator.pushReplacement(context, route);
+      
       });
-    }
+    } */
   }
 
   Future<void> saveUserInfoToFireStorage(User fusre) async {

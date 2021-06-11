@@ -48,8 +48,8 @@ class _SueccBodyState extends State<SueccBody> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: kPrimaryColor,
         onPressed: () {
-          Route route = MaterialPageRoute(builder: (_) => SplashScreen());
-          Navigator.pushReplacement(context, route);
+          /*   Route route = MaterialPageRoute(builder: (_) => SplashScreen());
+          Navigator.pushReplacement(context, route); */
         },
         child: Text(
           text,

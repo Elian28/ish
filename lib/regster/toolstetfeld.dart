@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ptint/login/erroretextfeld.dart';
 import 'package:ptint/login/sized.dart';
 
@@ -97,7 +96,7 @@ class _SignUpFormState extends State<SignUpForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: custemImage(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: custemImage(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }
@@ -131,7 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: custemImage(svgIcon: "assets/icons/Lock.svg"),
+        suffixIcon: custemImage(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }
@@ -165,7 +164,7 @@ class _SignUpFormState extends State<SignUpForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: custemImage(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: custemImage(svgIcon: "assets/icon/app@60x60x1.png"),
       ),
     );
   }

@@ -57,7 +57,7 @@ class _ArrayHomeState extends State<ArrayHome> {
     PrintCompanies(),
     PrintRestaurants(),
     PrintAdvertising(),
-    PrintBags(),
+    PrintBags()
   ];
   @override
   Widget build(BuildContext context) {
@@ -155,41 +155,35 @@ class _ArrayHomeState extends State<ArrayHome> {
   //البحث
   Widget _search() {
     return Container(
-      margin: AppTheme.padding,
-      child: Row(
-        children: <Widget>[
+        margin: AppTheme.padding,
+        child: Row(children: <Widget>[
           Expanded(
-            child: Container(
-              height: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: LightColor.lightGrey.withAlpha(100),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: InkWell(
-                onTap: () {
-                  //  startSearch();
-                },
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "المنتج بالاسم او الكود ",
-                      hintStyle: TextStyle(fontSize: 12),
-                      contentPadding: EdgeInsets.only(
-                          left: 10, right: 10, bottom: 0, top: 5),
-                      prefixIcon: Icon(Icons.search, color: Colors.black54)),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 20),
+              child: Container(
+                  height: 40,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: LightColor.lightGrey.withAlpha(100),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: InkWell(
+                      onTap: () {
+                        //  startSearch();
+                      },
+                      child: TextField(
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "المنتج بالاسم او الكود ",
+                              hintStyle: TextStyle(fontSize: 12),
+                              contentPadding: EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 0, top: 5),
+                              prefixIcon: Icon(Icons.search,
+                                  color: Colors.black54)))))),
+          SizedBox(width: 20)
           /*
           InkWell( onTap: () {},
             child: InkWell(
                   onTap: _showPopupMenu,
                   child: _icon(Icons.filter_list, color: Colors.black54)))
                    */
-        ],
-      ),
-    );
+        ]));
   }
 }

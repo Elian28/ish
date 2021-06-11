@@ -25,8 +25,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   SharedPreferences sharedPreferences;
   User user;
-  FirebaseAuth auth;
-  Firestore firestore;
+  FirebaseFirestore firestore;
 
   String collectionUser = "users";
   String collectionOrders = "orders";
@@ -36,7 +35,7 @@ class _PaymentPageState extends State<PaymentPage> {
   final String userName = 'name';
   final String userEmail = 'email';
   final String userPhotoUrl = 'photoUrl';
-  final String userUID = 'uid';
+  var idUser = FirebaseAuth.instance.currentUser;
   final String userAvatarUrl = 'url';
 
   final String addressID = 'addressID';
@@ -89,13 +88,13 @@ class _PaymentPageState extends State<PaymentPage> {
     writeOrderDetailsForUser({
       addressID: widget.addressId,
       totalAmount: sharedPreferences.getDouble("tot"),
-      'orderBy': sharedPreferences.getString(userUID),
+      'orderBy': sharedPreferences.getString(idUser.uid),
       productID: sharedPreferences.getStringList(userCartList),
       orderTime: DateTime.now().microsecond.toString(),
     });
     writeOrderDetailsForAdmin({
       totalAmount: widget.totalAmount.toString(),
-      'orderBy': sharedPreferences.getString(userUID),
+      'orderBy': sharedPreferences.getString(idUser.uid),
       productID: sharedPreferences.getStringList(userCartList),
       orderTime: DateTime.now().hour.toString(),
       "dele": productId,
@@ -118,7 +117,7 @@ class _PaymentPageState extends State<PaymentPage> {
     List tempList = sharedPreferences.getStringList(userCartList);
     firestore
         .collection(collectionUser)
-        .doc(sharedPreferences.getString(userUID))
+        .doc(sharedPreferences.getString(idUser.uid))
         .update({
       userCartList: tempList,
     }).then((value) {
@@ -134,9 +133,9 @@ class _PaymentPageState extends State<PaymentPage> {
   Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
     await firestore
         .collection(collectionUser)
-        .doc(sharedPreferences.getString(userUID))
+        .doc(sharedPreferences.getString(idUser.uid))
         .collection(collectionOrders)
-        .doc(sharedPreferences.getString(userUID) + data['orderTime'])
+        .doc(sharedPreferences.getString(idUser.uid) + data['orderTime'])
         .set(data);
   }
 

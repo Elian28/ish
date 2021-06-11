@@ -1,4 +1,3 @@
-
 /* class Todo {
   final String title;
   final String description;
@@ -336,8 +335,7 @@ class _ShowProductScreenState extends State<ShowProductScreen>
           productId: "$i-$j",
           price: "${(j + 1) * 10}",
           name: "Product $i-$j",
-          image:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Cancer.svg/280px-Cancer.svg.png",
+          image: "assets/icon/Untitled-3@60x60x1.png",
         );
 
         productList.add(product);
@@ -346,8 +344,7 @@ class _ShowProductScreenState extends State<ShowProductScreen>
       CategoryS category = CategoryS(
         id: "$i",
         name: "Category $i",
-        image:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Cancer.svg/280px-Cancer.svg.png",
+        image: "assets/icon/Untitled-3@60x60x1.png",
         productList: productList,
       );
 

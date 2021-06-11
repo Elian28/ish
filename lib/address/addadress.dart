@@ -24,7 +24,7 @@ class AddAddress extends StatelessWidget {
   String collectionUser = "users";
   String subCollectionAddress = 'userAddress';
 
-  final String userUID = 'uid';
+  var idUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class AddAddress extends StatelessWidget {
               // coll to the Firebase here
               firestore
                   .collection(collectionUser)
-                  .doc(sharedPreferences.getString(userUID))
+                  .doc(sharedPreferences.getString(idUser.uid))
                   .collection(subCollectionAddress)
                   .doc(DateTime.now().millisecond.toString())
                   .set(mode)

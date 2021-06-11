@@ -87,6 +87,7 @@ class NewsApp extends StatelessWidget {
 }
 
  */
+
 //!
 
 import 'dart:async';
@@ -108,7 +109,6 @@ import 'address/provideraddress.dart';
 import 'address/route.dart';
 import 'login/sinin.dart';
 
-//
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -174,7 +174,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class SplashScreen extends StatefulWidget {
-  static String routeName = "/sign_in";
+  static String routeName = "/splash";
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -188,9 +188,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   displaySplash() {
-    Timer(Duration(seconds: 5), () async {
+    Timer(Duration(seconds: 0), () async {
       if (user.currentUser != null) {
-        print('ahmed');
+        print('ريناد');
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       } else {
         Navigator.pushReplacementNamed(context, SignInScreen.routeName);
