@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "327199846940",
+    "firebase_url": "https://renad-b67fc.firebaseio.com",
+    "project_id": "renad-b67fc",
+    "storage_bucket": "renad-b67fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327199846940:android:b09fbff6da7b3c60aaa5d9",
+        "android_client_info": {
+          "package_name": "com.example.ptint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327199846940-al5r0b6badniva2r0v9fkl3j3nlcg2or.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwlVppH0ovsdXl6yfNJk2wRKyWxeADVaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327199846940-al5r0b6badniva2r0v9fkl3j3nlcg2or.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "327199846940-q8qa3anjnihia2kkmq02d3s2pbd00ekp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ptint"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
