@@ -625,3 +625,807 @@ class _EducationalServiceState extends State<EducationalService>
         });
   }
 }
+
+class DeleteWidget extends StatefulWidget {
+  const DeleteWidget({Key key}) : super(key: key);
+
+  @override
+  _DeleteWidgetState createState() => _DeleteWidgetState();
+}
+
+class _DeleteWidgetState extends State<DeleteWidget> {
+  String initdata = 'water';
+  List<String> _getdata = List();
+  @override
+  void initState() {
+    super.initState();
+    getdatafromAPI();
+  }
+
+  void getdatafromAPI() async {
+    /*
+    _db.drinks.then((drinks){
+        setState((){
+            _getdata.addAll(drinks);
+            initdata = _getdata[0];
+        });
+    });
+    */
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      _getdata.addAll(['coffee', 'tea', 'greentea']);
+      initdata = _getdata[0];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('test app'),
+      ),
+      body: Container(
+        child: Center(
+          child: DropdownButton(
+            items: _getdata.length > 0
+                ? _getdata.map((e) {
+                    return DropdownMenuItem<String>(
+                      child: Text(e.toString()),
+                      value: e.toString(),
+                    );
+                  }).toList()
+                : [
+                    DropdownMenuItem<String>(
+                      child: Text("water"),
+                      value: 'water',
+                    )
+                  ],
+            value: initdata,
+            onChanged: (value) {
+              setState(() {
+                initdata = value;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/* Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase
+  await Firebase.initializeApp();
+  runApp(KKKKKKK2());
+}
+
+class KKKKKKK2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+} */
+
+class KKKKKKK1 extends StatefulWidget {
+  @override
+  _KKKKKKK1State createState() => _KKKKKKK1State();
+}
+
+class _KKKKKKK1State extends State<KKKKKKK1> {
+  var _value1;
+
+  List<String> sel = [];
+  var _category;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget serviceType() {
+    return StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('educational').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return const Center(
+              child: const CupertinoActivityIndicator(),
+            );
+          var length = snapshot.data.docs.length;
+          DocumentSnapshot ds = snapshot.data.docs[length - 1];
+          _value1 = snapshot.data.docs;
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new Column(children: <Widget>[
+                  new InputDecorator(
+                      decoration: const InputDecoration(
+                        hintText: 'Choose an category',
+                        hintStyle: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      isEmpty: _category == null,
+                      child: new DropdownButton(
+                        value: _category,
+                        isDense: true,
+                        items:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          return new DropdownMenuItem<String>(
+                              value: _value1[index].data()['aas'],
+                              //document.data()['titles'][index],
+                              child: new Container(
+                                decoration: new BoxDecoration(
+                                    borderRadius:
+                                        new BorderRadius.circular(5.0)),
+                                height: 100.0,
+                                padding:
+                                    EdgeInsets.fromLTRB(10.0, 2.0, 10.0, 0.0),
+                                child: new Text(_value1[index].data()['aas']
+                                    //   document.data()['titles'][index],
+                                    ),
+                              ));
+                        }).toList(),
+                        onChanged: (value) {},
+                      ))
+                ]);
+              });
+        });
+    /*    StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('educational').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
+
+          return Container(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(12.0, 10.0, 10.0, 10.0),
+                      child: Text(
+                        "Shop",
+                      ),
+                    )),
+                new Expanded(
+                  flex: 4,
+                  child: DropdownButton(
+                    value: _value1,
+                    isDense: true,
+                    onChanged: (valueSelectedByUser) {
+                      //    _onShopDropItemSelected(valueSelectedByUser);
+                    },
+                    hint: Text('Choose shop'),
+                    items: snapshot.data.docs.map((DocumentSnapshot document) {
+                      return DropdownMenuItem<String>(
+                        value: document.data()['aas'] +
+                            ' ' +
+                            document.data()['aas'],
+                        child: Text(document.data()['aas'] +
+                            ' ' +
+                            document.data()['aas']),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+   */
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.grey.shade900,
+        appBar: AppBar(
+          backgroundColor: Colors.grey.shade900,
+        ),
+        body: serviceType());
+    /*      body: ListView(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('educational')
+                    //.orderBy('titles')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? Container(
+                          width: 150,
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                width: 150,
+                                height: 300,
+                                color: Theme.of(context).primaryColor,
+                                child: new DropdownButton<dynamic>(
+                                  items: snapshot.data.docs
+                                      .map<DropdownMenuItem<dynamic>>((value) =>
+                                          new DropdownMenuItem<dynamic>(
+                                            value: value["aas"],
+                                            child:
+                                                new Text(value["aas"][index]),
+                                          ))
+                                      .toList(),
+                                  onChanged: (_) {},
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Container();
+                }),
+          ],
+        ));
+    */ /*        body: Column(children: [
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('educational')
+                  //.orderBy('titles')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return Container();
+                return Container(
+                    height: 300.0,
+                    child: ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          print(
+                              "this is lis${snapshot.data.docs[0]['titles']}}");
+
+                          return new Container(
+                            width: 150,
+                            color: Theme.of(context).primaryColor,
+                            child: new DropdownButton<String>(
+                              items: snapshot.data.docs
+                                  .map<DropdownMenuItem<String>>((value) =>
+                                      new DropdownMenuItem<String>(
+                                        value: value["aas"].toString(),
+                                        child: new Text(value["aas"][index]),
+                                      ))
+                                  .toList(),
+                              onChanged: (_) {
+                                setState(() {
+                                  _value1 = 'a';
+                                  //   catogSelext = newValue;
+                                });
+                              },
+                            ),
+                          );
+                          /*     return Container(
+                            height: 200,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all()),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: _value1,
+                                style: TextStyle(color: Colors.deepPurple),
+                                underline: Container(
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                                onChanged: (String newValue) {
+                                  print(newValue);
+                                  setState(() {
+                                    _value1 = 'a';
+                                    catogSelext = newValue;
+                                  });
+                                },
+                                items: snapshot.data.docs
+                                    .map<DropdownMenuItem<String>>(
+                                        (value) => new DropdownMenuItem<String>(
+                                              value: value["aas"],
+                                              child: new Text(value["aas"]),
+                                            ))
+                                    .toList(),
+                                /*     items: snapshot.data.docs[0]['aas']
+                                    .map<DropdownMenuItem<dynamic>>(
+                                        (String _value) {
+                                  print("value us work $_value");
+                                  return DropdownMenuItem<String>(
+                                    value: _value.toString(),
+                                    child: Text(_value),
+                                  );
+                                }).toList(), */
+                              ),
+                            ),
+                          );
+ */
+                          /*    return Container(
+                            height: 300,
+                            child: ListView(
+                                children: snapshot.data.docs
+                                    .map((DocumentSnapshot document) {
+                              return DropdownButton(
+                                  value: _value1,
+                                  items: snapshot.data.docs.map((value) {
+                                    return DropdownMenuItem(
+                                      vaسىشlue: _value1,
+                                      child: Text(snapshot.data.docs[index]
+                                          .data()['titles']
+                                          .toString()),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      value = _value1;
+                                    });
+                                  });
+                            }).toList()),
+                          );
+                         */
+                        }));
+              })
+        ]));
+   */
+  }
+
+  liist() {
+    StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('educational')
+            //.orderBy('titles')
+            .snapshots(),
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? new Container(
+                  width: 150,
+                  color: Theme.of(context).primaryColor,
+                  child: new DropdownButton<String>(
+                    items: snapshot.data
+                        .map<DropdownMenuItem<String>>(
+                            (value) => new DropdownMenuItem<String>(
+                                  value: value["aas"],
+                                  child: new Text(value["aas"]),
+                                ))
+                        .toList(),
+                    onChanged: (_) {},
+                  ),
+                )
+              : Container();
+        });
+  }
+
+  listGat() {
+    return Container(
+      // padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
+      // height: ScreenUtil().setHeight(50),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(),
+      ),
+      child: DropdownButton<String>(
+        isExpanded: true,
+        value: _value1,
+        style: TextStyle(color: Colors.deepPurple),
+        underline: Container(
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String newValue) {
+          print(newValue);
+          setState(() {
+            _value1 = newValue;
+            print(_value1);
+            // = newValue;
+          });
+        },
+        items: sel.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              //style: textStyle2,
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class KKKKKKK2 extends StatefulWidget {
+  @override
+  _KKKKKKK2State createState() => _KKKKKKK2State();
+}
+
+class _KKKKKKK2State extends State<KKKKKKK2> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+        stream:
+            FirebaseFirestore.instance.collection('educational').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null)
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.red,
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.teal),
+              ),
+            );
+          return Container(
+              child: ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    var result = snapshot.data.docs[index].data()['titles'];
+                    return new Column(children: <Widget>[
+                      new Container(
+                        width: 150,
+                        color: Theme.of(context).primaryColor,
+                        child: new DropdownButton<String>(
+                          items: snapshot.data
+                              .map<DropdownMenuItem<String>>(
+                                  (value) => new DropdownMenuItem<String>(
+                                        value: value,
+                                        child: new Text(value[result]),
+                                      ))
+                              .toList(),
+                          onChanged: (_) {},
+                        ),
+                      )
+                      /*     new InputDecorator(
+                          decoration: const InputDecoration(
+                            hintText: 'Choose an category',
+                            hintStyle: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "OpenSans",
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          isEmpty: snapshot.data.docs == null,
+                          child: new DropdownButton(
+                            value: snapshot.data.docs,
+                            isDense: true,
+                            items: snapshot.data.docs
+                                .map((DocumentSnapshot document) {
+                              return new DropdownMenuItem<String>(
+                                  value: snapshot.data.docs[index].data()['aas']
+                                      [0],
+                                  //document.data()['titles'][index],
+                                  child: new Container(
+                                    decoration: new BoxDecoration(
+                                        borderRadius:
+                                            new BorderRadius.circular(5.0)),
+                                    height: 100.0,
+                                    padding: EdgeInsets.fromLTRB(
+                                        10.0, 2.0, 10.0, 0.0),
+                                    child: new Text(
+                                        snapshot.data.docs[index].data()['aas'][0]
+                                        //   document.data()['titles'][index],
+                                        ),
+                                  ));
+                            }).toList(),
+                            onChanged: (value) {},
+                          ))
+                   */
+                    ]);
+
+                    /*        return SingleChildScrollView(
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 0),
+                            child: Container(
+                                height: 120,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.white.withOpacity(0.5),
+                                          spreadRadius: 1.5,
+                                          blurRadius: 1.5
+                                          //offset: Offset(0, 1), // changes position of shadow
+                                          )
+                                    ],
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        color: Colors.red[200],
+                                        width: 0.5,
+                                        style: BorderStyle.solid)),
+                                child: ListView(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      for (var res in result)
+                                        Text(
+                                          res,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.red[500]),
+                                        )
+                                    ]))));
+              */
+                  }));
+        },
+      ),
+    );
+  }
+
+  Widget serviceType() {
+    return StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('educational').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return const Center(
+              child: const CupertinoActivityIndicator(),
+            );
+          var length = snapshot.data.docs.length;
+          DocumentSnapshot ds = snapshot.data.docs[length - 1];
+          //_value1 = snapshot.data.docs;
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new Column(children: <Widget>[
+                  new InputDecorator(
+                      decoration: const InputDecoration(
+                        hintText: 'Choose an category',
+                        hintStyle: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: "OpenSans",
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      isEmpty: snapshot.data.docs == null,
+                      child: new DropdownButton(
+                        value: snapshot.data.docs,
+                        isDense: true,
+                        items:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          return new DropdownMenuItem<String>(
+                              value: snapshot.data.docs[index].data()['aas'],
+                              //document.data()['titles'][index],
+                              child: new Container(
+                                decoration: new BoxDecoration(
+                                    borderRadius:
+                                        new BorderRadius.circular(5.0)),
+                                height: 100.0,
+                                padding:
+                                    EdgeInsets.fromLTRB(10.0, 2.0, 10.0, 0.0),
+                                child: new Text(
+                                    snapshot.data.docs[index].data()['aas']
+                                    //   document.data()['titles'][index],
+                                    ),
+                              ));
+                        }).toList(),
+                        onChanged: (value) {},
+                      ))
+                ]);
+              });
+        });
+    /*    StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('educational').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
+
+          return Container(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(12.0, 10.0, 10.0, 10.0),
+                      child: Text(
+                        "Shop",
+                      ),
+                    )),
+                new Expanded(
+                  flex: 4,
+                  child: DropdownButton(
+                    value: _value1,
+                    isDense: true,
+                    onChanged: (valueSelectedByUser) {
+                      //    _onShopDropItemSelected(valueSelectedByUser);
+                    },
+                    hint: Text('Choose shop'),
+                    items: snapshot.data.docs.map((DocumentSnapshot document) {
+                      return DropdownMenuItem<String>(
+                        value: document.data()['aas'] +
+                            ' ' +
+                            document.data()['aas'],
+                        child: Text(document.data()['aas'] +
+                            ' ' +
+                            document.data()['aas']),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+   */
+  }
+}
+
+class KKKKKKK extends StatefulWidget {
+  @override
+  _KKKKKKKState createState() => _KKKKKKKState();
+}
+
+class _KKKKKKKState extends State<KKKKKKK> {
+  var selectedCurrency, selectedType;
+  final GlobalKey<FormState> _formKeyValue = new GlobalKey<FormState>();
+  List<String> _accountType = <String>[
+    'Savings',
+    'Deposit',
+    'Checking',
+    'Brokerage'
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Container(
+            alignment: Alignment.center,
+            child: Text("Account Details",
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+          ),
+          actions: <Widget>[],
+        ),
+        body: Form(
+          key: _formKeyValue,
+          //autovalidate: true,
+          child: new ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              new TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your Phone Details',
+                    labelText: 'Phone',
+                  ),
+                  keyboardType: TextInputType.number),
+              new TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your Name',
+                  labelText: 'Name',
+                ),
+              ),
+              new TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter your Email Address',
+                  labelText: 'Email',
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 50.0),
+                  DropdownButton(
+                    items: _accountType
+                        .map((value) => DropdownMenuItem(
+                              child: Text(
+                                value,
+                                style: TextStyle(color: Color(0xff11b719)),
+                              ),
+                              value: value,
+                            ))
+                        .toList(),
+                    onChanged: (selectedAccountType) {
+                      print('$selectedAccountType');
+                      setState(() {
+                        selectedType = selectedAccountType;
+                      });
+                    },
+                    value: selectedType,
+                    isExpanded: false,
+                    hint: Text(
+                      'Choose Account Type',
+                      style: TextStyle(color: Color(0xff11b719)),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 40.0),
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("currency")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      const Text("Loading.....");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.docs.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.docs[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              snap.id,
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                            value: "${snap.id}",
+                          ),
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 50.0),
+                          DropdownButton(
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Selected Currency value is $currencyValue',
+                                  style: TextStyle(color: Color(0xff11b719)),
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                              });
+                            },
+                            value: selectedCurrency,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Choose Currency Type",
+                              style: TextStyle(color: Color(0xff11b719)),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return null;
+                  }),
+              SizedBox(
+                height: 150.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  RaisedButton(
+                      color: Color(0xff11b719),
+                      textColor: Colors.white,
+                      child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Submit", style: TextStyle(fontSize: 24.0)),
+                            ],
+                          )),
+                      onPressed: () {},
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0))),
+                ],
+              ),
+            ],
+          ),
+        ));
+  }
+}

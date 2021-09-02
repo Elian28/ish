@@ -238,7 +238,7 @@ class _TitleCState extends State<TitleC> {
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // FirebaseAuth.instance.currentUser().then((user) {
-      FirebaseFirestore.instance.collection("profile").doc(user.uid).update({
+      FirebaseFirestore.instance.collection("users").doc(user.uid).update({
         "latitude": _pickedLocation.latLng.latitude,
         "longitude": _pickedLocation.latLng.longitude,
         "userId": user.uid,
@@ -264,7 +264,7 @@ class _TitleCState extends State<TitleC> {
     await getidUsers();
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      FirebaseFirestore.instance.collection("profile").doc().set({
+      FirebaseFirestore.instance.collection("users").doc().set({
         "latitude": _pickedLocation.latLng.latitude,
         "longitude": _pickedLocation.latLng.longitude,
         "userId": user.uid,

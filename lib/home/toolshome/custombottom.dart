@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ptint/Screens/Home/hom.dart';
 import 'package:ptint/login/sized.dart';
 import 'package:ptint/sitting/profilsitting.dart';
 
@@ -55,8 +56,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         ? kPrimaryColor
                         : inActiveIconColor,
                   ),
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => HomeScreen()))),
+                  onPressed: () {
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                  }),
               IconButton(
                 icon: Icon(
                   Icons.star,

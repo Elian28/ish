@@ -3,11 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ptint/3/EducationalService.dart';
 import 'package:ptint/cart/cartscreen.dart';
-import 'package:ptint/game/combeotr.dart';
-import 'package:ptint/game/cppon.dart';
-import 'package:ptint/game/game.dart';
-import 'package:ptint/game/gift.dart';
+//!??1
 import 'package:ptint/game/morerecost.dart';
 import 'package:ptint/home/toolshome/appbarnet.dart';
 import 'package:ptint/home/toolshome/custombottom.dart';
@@ -18,10 +16,12 @@ import 'package:ptint/model/post.dart';
 import 'package:ptint/model/press.dart';
 import 'package:ptint/scroller/scrol.dart';
 import 'package:ptint/veiwallproducts/viewall.dart';
+import 'package:ptint/yes/ListUsers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../meu.dart';
 import '../../themePprovider.dart';
+import 'UsedBooks.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
@@ -54,33 +54,36 @@ class _HomeScreenState extends State<HomeScreen> {
   final String isSuccess = 'isSuccess';
   List<Map<String, dynamic>> categories = [
     {
-      "icon": "https://m7et.com/wp-content/uploads/2020/04/7330-1-300x300.jpg",
-      "text": "اسرع طلب",
+      "icon": "assets/images/fedex-express.png",
+      "text": "1",
     },
     {
-      "icon": "https://m7et.com/wp-content/uploads/2020/04/7330-1-300x300.jpg",
-      "text": "طباعة",
+      "icon": "assets/icon/app@60x60x1.png",
+      "text": "خدمة تعليمية",
     },
     {
-      "icon": "https://m7et.com/wp-content/uploads/2020/04/7330-1-300x300.jpg",
-      "text": "التوصيل مجاني",
+      "icon": "assets/icon/app@60x60x1.png",
+      "text": "كتب مستعملة",
     },
     {
-      "icon": "assets/icon/Untitled-3@60x60x1.png",
-      "text": "مفتوح",
+      "icon": "assets/icon/app@60x60x1.png",
+      "text": "عملائنا",
     },
     {
-      "icon": "assets/icon/Untitled-3@60x60x1.png",
+      "icon": "assets/icon/app@60x60x1.png",
       "text": "أكثر",
     },
   ];
   List<Widget> rot = [
-    Comp(),
-    Coppon(),
-    Game(),
-    Gift(),
+    KKKKKKK(),
+    //  Educational(),
+    //  Comp(),
+    EducationalService(), //Coppon(),
+    UsedBooks(), //Game(),
+    ListUsers(), //Gift(),
     ViewAllPro(),
   ];
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

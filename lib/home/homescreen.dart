@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+/* import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ import 'package:ptint/veiwallproducts/viewall.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../meu.dart';
 import '../themePprovider.dart';
-
+//!??
 class HomeScreen extends StatefulWidget {
   static String routeName = "/home";
 
@@ -423,3 +423,4 @@ class _HomeScreenState extends State<HomeScreen> {
             ]))));
   }
 }
+ */

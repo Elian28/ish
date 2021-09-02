@@ -45,10 +45,11 @@ class _ProductCarState extends State<ProductCar> {
                     color: kSecondaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Hero(
+                  child: Image.asset(
+                      "assets/icon/app@60x60x1.png"), /*  Hero(
                     tag: widget.product.id.toString(),
-                    child: Image.asset(widget.product.images[0]),
-                  ),
+                    child:
+                  ), */
                 ),
               ),
               SizedBox(height: getProportionateScreenHeight(10)),

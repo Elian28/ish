@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:ptint/Screens/Home/hom.dart';
 import 'package:ptint/address/provider.dart';
 import 'package:ptint/home/homescreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,8 +114,8 @@ class _PaymentPageState extends State<PaymentPage> {
     List tempList = sharedPreferences.getStringList(userCartList);
     firestore
         .collection(collectionUser)
-        .document(sharedPreferences.getString(userUID))
-        .updateData({
+        .doc(sharedPreferences.getString(userUID))
+        .update({
       userCartList: tempList,
     }).then((value) {
       sharedPreferences.setStringList(userCartList, tempList);
@@ -130,16 +131,16 @@ class _PaymentPageState extends State<PaymentPage> {
   Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
     await firestore
         .collection(collectionUser)
-        .document(sharedPreferences.getString(userUID))
+        .doc(sharedPreferences.getString(userUID))
         .collection(collectionOrders)
-        .document(sharedPreferences.getString(userUID) + data['orderTime'])
-        .setData(data);
+        .doc(sharedPreferences.getString(userUID) + data['orderTime'])
+        .set(data);
   }
 
   Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
     await firestore
         .collection(collectionOrders)
-        .document(sharedPreferences.getString(userUID) + data['orderTime'])
-        .setData(data);
+        .doc(sharedPreferences.getString(userUID) + data['orderTime'])
+        .set(data);
   }
 }
